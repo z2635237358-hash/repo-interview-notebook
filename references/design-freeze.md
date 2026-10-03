@@ -25,9 +25,9 @@ Maintain one compact fact model that every output page and diagram consumes. Use
 | Field | Required content |
 |---|---|
 | Project identity | Users, core workflow, risk, and why the system exists |
-| Workload | Ordinary traffic, burst shape, read/write mix, data volume, and hotspot distribution |
+| Workload | Ordinary traffic or run volume, burst shape, operation/model/tool mix, data and context volume, and hotspot or hard-task distribution |
 | Availability | Intended uptime, tolerated degradation, RPO/RTO or explicit absence of guarantees |
-| Resource envelope | Service replicas, middleware topology, machine class, pools, and relevant limits |
+| Resource envelope | Service replicas, middleware and model-provider topology, machine class, pools, step/token/tool budgets, and relevant limits |
 | Mainlines | The limited set of interview themes and the business reason for each |
 
 ### Mechanism facts
@@ -50,6 +50,21 @@ For every mainline freeze:
 | Evidence | Which internal label and source support the claim? |
 
 Never assign ownership to a cache, transient queue, process-local map, or connection. Such components may accelerate access or transport change, but the fact model must identify the durable authority used for rebuild and reconciliation.
+
+### Probabilistic decision contract
+
+For an Agent, ranking system, classifier, or other probabilistic mechanism, add this contract beside the mechanism facts. These fields describe how a nondeterministic proposal is produced, evaluated, and bounded; they do not replace ownership, transaction, idempotency, ordering, recovery, or final-arbiter decisions.
+
+| Field | Required decision |
+|---|---|
+| Decision policy and versions | Prompt, model, tool schema, retrieval index, memory schema, policy, and runtime-configuration versions that produced the decision |
+| Nondeterministic boundary | Acceptable variation, confidence or abstention behavior, fallback route, retry limit, and human-escalation condition |
+| Evaluation contract | Dataset and version, grader, human calibration, business and risk slices, uncertainty, acceptance threshold, and release gate |
+| Context contract | Retrieval and memory sources, provenance, token allocation, freshness, permissions, conflict policy, and truncation behavior |
+| Safety boundary | Actions that require deterministic validation, least-privilege execution, sandboxing, approval, or human confirmation |
+| Cost and latency budget | Maximum steps, model and tool calls, retries, input/output tokens, cost, wall-clock deadline, and end-to-end latency percentiles |
+
+If a probabilistic Agent selects or proposes a deterministic business side effect, the ordinary mechanism contract still governs execution. The side effect must retain its business idempotency key, transaction boundary, durable source of truth, and final arbiter; model confidence, prompt state, Agent memory, or orchestration checkpoints are not substitutes. Record the Agent's proposal and version bundle for audit, but let the deterministic owner validate authorization, reject stale or duplicate work, and return the committed result on replay.
 
 ## Contradiction resolution
 
@@ -82,18 +97,18 @@ Apply these rules:
 
 ## State-machine freeze
 
-Write each business lifecycle independently. Do not overload one status column with payment, fulfillment, delivery, risk, and notification semantics when they can advance independently.
+Write each business or Agent-run lifecycle independently. Do not overload one status or decision record with payment, fulfillment, delivery, risk, notification, orchestration, and evaluation semantics when they can advance independently.
 
 For each machine record:
 
 | Item | Required decision |
 |---|---|
-| Entity and owner | The aggregate whose state changes and its durable owner |
-| States | Canonical names and user-visible meaning |
-| Allowed transitions | From, event/command, guard, to, and side effects |
+| Entity and owner | The aggregate, run, step, or decision whose state changes and its durable owner or authority |
+| States | Canonical names and user-visible or operational meaning |
+| Allowed transitions | From, event/command or evaluated decision, guard, to, and side effects |
 | Terminal states | States that reject later commands except explicit repair operations |
-| Versioning | CAS version, fencing token, lease generation, sequence, or other stale-write guard |
-| Timeout | Durable deadline, trigger, fallback scan, and idempotent expiry action |
+| Versioning | CAS version, fencing token, lease generation, sequence, prompt/model/tool/index/policy version bundle, or other stale-write or stale-decision guard |
+| Timeout | Durable deadline or step budget, trigger, fallback scan or supervisor, and idempotent expiry/cancellation action |
 | Replay result | Result returned when the transition already succeeded or became impossible |
 
 Freeze invariants separately from transitions. Useful invariant forms include:
@@ -102,6 +117,8 @@ Freeze invariants separately from transitions. Useful invariant forms include:
 - balances equal the sum of immutable ledger entries and every journal entry balances;
 - a state transition and its durable outbound event commit atomically;
 - a consumer side effect is unique by business event key;
+- one active attempt owns a run step for a generation, and stale attempts cannot publish a later result;
+- every accepted probabilistic decision records the version bundle and evaluation or human-approval gate that admitted it;
 - every accepted cursor is monotonic only within its declared scope;
 - a migrated key resolves to exactly one writable owner for a routing version.
 

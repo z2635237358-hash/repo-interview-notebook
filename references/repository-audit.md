@@ -4,17 +4,25 @@ Use this reference when inspecting an unfamiliar repository and selecting the te
 
 ## Read order
 
-1. Repository instructions and README files.
-2. Module tree and build manifests.
-3. Schemas, migrations, and indexes.
-4. Configuration and middleware integration.
-5. Core business use cases and state transitions.
-6. Tests, benchmarks, and evidence indexes.
-7. Existing résumé text and interview notes.
+1. Repository instructions, README files, product description, and manifests.
+2. Entrypoints, package/module graph, configuration, and deployment shape.
+3. Domain artifacts selected through the signal table below.
+4. Core business workflows and state or decision transitions.
+5. Tests, evals, traces, benchmarks, and evidence indexes.
+6. Existing résumé text and interview notes.
 
 Start broad enough to find service and data boundaries, then follow only the flows that can become interview mainlines. Prefer repository-native search and manifests over exhaustive file-by-file reading. Inspect generated files or vendored dependencies only when they materially affect the system story.
 
 Repository instructions establish access, safety, and execution boundaries. They do not automatically determine the interview architecture. Record actual implementation evidence separately from the completed-state interpretation.
+
+## Domain detection
+
+| Profile | Positive signals | Reference |
+|---|---|---|
+| Backend systems | APIs, schemas, migrations, queues, caches, schedulers, replicas, sharding, failover | `references/domains/backend.md` |
+| Agent systems | agent loops/graphs, prompts, tools/MCP, model routing, RAG, memory, evals, traces, guardrails | `references/domains/agent-systems.md` |
+
+Load every materially relevant profile. Hybrid repositories may load both. If neither fits, continue with universal rules instead of inventing a category.
 
 ## Extraction table
 
@@ -41,16 +49,16 @@ During extraction, identify cross-cutting facts that must later be frozen once: 
 
 Select four to eight mainlines. Prefer topics with a real business reason, at least one non-trivial invariant, layered follow-up potential, a measurable result or capacity model, and a defensible failure story. Merge overlapping mechanisms. De-emphasize decorative frameworks and generic CRUD.
 
-Score candidate mainlines by interview value rather than module size. Strong mainlines normally connect several layers, such as an API decision, persistent data model, concurrency control, middleware role, recovery process, and operational boundary. A sophisticated implementation without a clear business reason is weaker than a smaller mechanism with a crisp invariant and failure story.
+Score candidate mainlines by interview value rather than module size. Strong mainlines normally connect several layers, such as input, decision policy, state or context, external dependencies, evaluation or recovery, and operational boundaries. A sophisticated implementation without a clear business reason is weaker than a smaller mechanism with a crisp invariant and failure story.
 
-Choose a limited set that collectively demonstrates breadth without duplicating the same consistency pattern. Combine caching, throttling, and hotspot protection when they share one traffic-control story; separate them only when their sources of truth or failure semantics differ. Treat framework labels, architectural styles, and routine CRUD as supporting detail unless they materially change an invariant or trade-off.
+Choose a limited set that collectively demonstrates breadth without duplicating the same decision, control, or recovery pattern. Use the loaded domain profiles to decide which mechanisms belong in one mainline and separate them only when their authority, failure semantics, evaluation, or business purpose differs. Treat framework labels, architectural styles, and routine implementation details as supporting context unless they materially change an invariant or trade-off.
 
 For each selected mainline, confirm that the future notebook can provide:
 
 - a business trigger and a 30–60 second overview;
-- an owned data model and explicit source of truth;
-- a normal path, state transitions, and invariants;
-- concurrency, idempotency, consistency, and failure recovery;
+- an owned state or context model and explicit authority or source of truth;
+- a normal path, state or decision transitions, and invariants;
+- deterministic-effect semantics for concurrency, idempotency, consistency, replay, and recovery, plus versioning, evaluation, fallback, and recovery for probabilistic decisions where applicable;
 - one useful quantified claim with an internal evidence label;
 - alternatives, limits, and at least three levels of follow-up.
 

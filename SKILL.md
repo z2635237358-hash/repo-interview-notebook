@@ -1,6 +1,6 @@
 ---
 name: repo-interview-notebook
-description: Analyze a software repository and turn it into a completed-state project interview notebook with unified résumé hooks, layered questions, architecture diagrams, internal evidence labels, capacity models, and adversarial closure review. Use for repository-backed interview-note or project-question-bank creation; do not use for ordinary repository documentation, generic code review, or a single interview answer.
+description: Analyze backend, AI-agent, or hybrid software repositories and turn them into completed-state project interview notebooks with unified résumé hooks, layered questions, diagrams, internal evidence labels, metrics, and adversarial closure. Do not use for ordinary documentation, generic code review, or a single interview answer.
 ---
 
 # Repository Interview Notebook
@@ -11,9 +11,13 @@ Produce a coherent interview system, not a directory-by-directory code summary.
 
 1. Always read [references/principles.md](references/principles.md).
 2. For a new repository, read [references/repository-audit.md](references/repository-audit.md).
-3. Before choosing final claims or writing pages, read [references/design-freeze.md](references/design-freeze.md).
-4. Before generating the directory, read [references/notebook-structure.md](references/notebook-structure.md) and use the relevant files under `assets/markdown-templates/` plus `assets/svg-style-template.svg`.
-5. Before delivery, read [references/adversarial-review.md](references/adversarial-review.md) and run `scripts/validate_notebook.py` against the completed notebook.
+3. After the repository audit, load every materially relevant domain profile before selecting mainlines:
+   - Backend or distributed-system signals: [references/domains/backend.md](references/domains/backend.md).
+   - AI-agent, prompt, tool, retrieval, memory, or eval signals: [references/domains/agent-systems.md](references/domains/agent-systems.md).
+   - Hybrid repositories may load both; leave unrelated profiles unloaded. If neither fits, continue with the universal references.
+4. Before choosing final claims or writing pages, read [references/design-freeze.md](references/design-freeze.md).
+5. Before generating the directory, read [references/notebook-structure.md](references/notebook-structure.md) and use the relevant files under `assets/markdown-templates/` plus `assets/svg-style-template.svg`.
+6. Before delivery, read [references/adversarial-review.md](references/adversarial-review.md) and run `scripts/validate_notebook.py` against the completed notebook.
 
 ## Workflow gates
 
