@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">系统机制图样式模板</title>
+  <desc id="desc">由事实源、处理机制和可恢复输出组成的中性流程示例</desc>
+  <defs>
+    <filter id="card-shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="12" stdDeviation="18" flood-color="#19324d" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrowhead" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M 0 0 L 12 6 L 0 12 z" class="arrow-head"/>
+    </marker>
+    <style>
+      .canvas { fill: #f5f8fc; }
+      .eyebrow { fill: #2f6fed; font: 700 22px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 2px; }
+      .title { fill: #102a43; font: 700 48px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .subtitle { fill: #627d98; font: 400 24px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .card { fill: #ffffff; stroke: #d9e2ec; stroke-width: 2; rx: 28; filter: url(#card-shadow); }
+      .card-accent-source { fill: #2f6fed; }
+      .card-accent-process { fill: #7756e8; }
+      .card-accent-output { fill: #168f76; }
+      .card-kicker { fill: #829ab1; font: 700 18px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; letter-spacing: 1.4px; }
+      .card-title { fill: #102a43; font: 700 34px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .card-body { fill: #486581; font: 400 21px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .chip { fill: #edf2ff; stroke: #c7d7fe; stroke-width: 1.5; rx: 18; }
+      .chip-text { fill: #3154a5; font: 600 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+      .arrow { fill: none; stroke: #829ab1; stroke-width: 4; stroke-linecap: round; marker-end: url(#arrowhead); }
+      .arrow-head { fill: #829ab1; }
+      .arrow-label { fill: #627d98; font: 600 17px -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+    </style>
+  </defs>
+
+  <rect class="canvas" width="1600" height="940"/>
+
+  <text class="eyebrow" x="100" y="104">COMPLETED-STATE MECHANISM</text>
+  <text class="title" x="100" y="172">系统机制图</text>
+  <text class="subtitle" x="100" y="218">用统一视觉语言表达归属、处理与恢复，不在图中引入未冻结结论</text>
+
+  <path class="arrow" d="M 520 528 C 560 528, 575 528, 615 528"/>
+  <text class="arrow-label" x="568" y="496" text-anchor="middle">输入</text>
+  <path class="arrow" d="M 985 528 C 1025 528, 1040 528, 1080 528"/>
+  <text class="arrow-label" x="1033" y="496" text-anchor="middle">收敛</text>
+
+  <g aria-label="事实源示例卡片">
+    <rect class="card" x="100" y="330" width="420" height="400" rx="28"/>
+    <rect class="card-accent-source" x="100" y="330" width="12" height="400" rx="6"/>
+    <text class="card-kicker" x="150" y="400">SOURCE OF TRUTH</text>
+    <text class="card-title" x="150" y="458">事实源</text>
+    <text class="card-body" x="150" y="516">
+      <tspan x="150" dy="0">明确数据归属、权威状态</tspan>
+      <tspan x="150" dy="38">以及最终裁决位置。</tspan>
+    </text>
+    <rect class="chip" x="150" y="634" width="156" height="48" rx="18"/>
+    <text class="chip-text" x="228" y="665" text-anchor="middle">权威归属</text>
+  </g>
+
+  <g aria-label="处理机制示例卡片">
+    <rect class="card" x="615" y="330" width="370" height="400" rx="28"/>
+    <rect class="card-accent-process" x="615" y="330" width="12" height="400" rx="6"/>
+    <text class="card-kicker" x="665" y="400">PROCESSING</text>
+    <text class="card-title" x="665" y="458">处理机制</text>
+    <text class="card-body" x="665" y="516">
+      <tspan x="665" dy="0">展示必要步骤、边界</tspan>
+      <tspan x="665" dy="38">与一致性约束。</tspan>
+    </text>
+    <rect class="chip" x="665" y="634" width="156" height="48" rx="18"/>
+    <text class="chip-text" x="743" y="665" text-anchor="middle">机制闭环</text>
+  </g>
+
+  <g aria-label="可恢复输出示例卡片">
+    <rect class="card" x="1080" y="330" width="420" height="400" rx="28"/>
+    <rect class="card-accent-output" x="1080" y="330" width="12" height="400" rx="6"/>
+    <text class="card-kicker" x="1130" y="400">RECOVERABLE OUTPUT</text>
+    <text class="card-title" x="1130" y="458">可恢复输出</text>
+    <text class="card-body" x="1130" y="516">
+      <tspan x="1130" dy="0">标明结果、故障边界</tspan>
+      <tspan x="1130" dy="38">以及恢复后的收敛点。</tspan>
+    </text>
+    <rect class="chip" x="1130" y="634" width="156" height="48" rx="18"/>
+    <text class="chip-text" x="1208" y="665" text-anchor="middle">可验证恢复</text>
+  </g>
+</svg>

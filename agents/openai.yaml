@@ -1,0 +1,4 @@
+interface:
+  display_name: "Repository Interview Notebook"
+  short_description: "Turn a code repository into a defensible interview notebook"
+  default_prompt: "Use $repo-interview-notebook to analyze this repository and produce a completed-state, internally evidence-labelled interview notebook."
